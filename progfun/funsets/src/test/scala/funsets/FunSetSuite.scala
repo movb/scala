@@ -110,5 +110,69 @@ class FunSetSuite extends FunSuite {
     }
   }
 
+  test("intersect contains all elements which belongs to both sets") {
+    new TestSets {
+      val u1 = union(s1, s2)
+      val u2 = union(s2, s3)
+      val i1 = intersect(u1, u2)
+      assert(!contains(i1, 1), "Intersect 1")
+      assert(contains(i1, 2), "Intersect 2")
+      assert(!contains(i1, 3), "Intersect 3")
+    }
+  }
+
+  test("diff contains difference of first set and second set") {
+    new TestSets {
+      val u1 = union(s1, s2)
+      val u2 = union(s2, s3)
+      val d1 = diff(u1, u2)
+      assert(contains(d1, 1), "Diff 1")
+      assert(!contains(d1, 2), "Diff 2")
+      assert(!contains(d1, 3), "Diff 3")
+    }
+  }
+
+  test("filter contains only elements that satisfy p") {
+    new TestSets {
+      val u = union(union(s1, s2), s3)
+      val fu = filter(u, (x: Int) => x > 1)
+      assert(!contains(fu, 1), "Filter 1")
+      assert(contains(fu, 2), "Filter 2")
+      assert(contains(fu, 3), "Filter 3")
+    }
+  }
+
+  test("forall return's true only if all elements satisfy p") {
+    new TestSets {
+      val u = union(union(s1, s2), s3)
+      val f1 = forall(u, (x: Int) => x > 2)
+      val f2 = forall(u, (x: Int) => x < 4)
+      assert(!f1, "Forall 1")
+      assert(f2, "Forall 2")
+    }
+  }
+
+  test("exists return's true only if there is some element that satisfy p") {
+    new TestSets {
+      val u = union(union(s1, s2), s3)
+      val e1 = exists(u, (x: Int) => x > 2)
+      val e2 = exists(u, (x: Int) => x > 4)
+      assert(e1, "Exists 1")
+      assert(!e2, "Exists 2")
+    }
+  }
+
+  test("map return's set with applied function f") {
+    new TestSets {
+      val u = union(union(s1, s2), s3)
+      val m = map(u, (x: Int) => x*x)
+      assert(contains(m, 1), "Map 1")
+      assert(contains(m, 4), "Map 2")
+      assert(contains(m, 9), "Map 3")
+      assert(!contains(m, 2), "Map 4")
+      assert(!contains(m, 3), "Map 5")
+    }
+  }
+
 
 }
