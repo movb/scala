@@ -1,12 +1,14 @@
-def msort(xs: List[Int]): List[Int] = {
+import math.Ordering
+
+def msort[T](xs: List[T])(implicit ord: Ordering[T]): List[T] = {
   val n = xs.length/2
   if (n == 0) xs
   else {
-    def merge(xs: List[Int], ys: List[Int]): List[Int] = (xs, ys) match {
+    def merge(xs: List[T], ys: List[T]): List[T] = (xs, ys) match {
       case (Nil, ys1) => ys1
       case (xs1, Nil) => xs1
       case (x::xs1, y::ys1) =>
-        if (x < y) x::merge(xs1,ys)
+        if (ord.lt(x, y)) x::merge(xs1,ys)
         else y::merge(xs,ys1)
     }
     val (fst,snd) = xs splitAt n
@@ -15,3 +17,7 @@ def msort(xs: List[Int]): List[Int] = {
 }
 
 msort(List(3, 2, -1, 0, 5, 66, 2))
+
+val fruits = List("apple", "orange", "banana", "pineapple")
+
+msort(fruits)
