@@ -105,7 +105,7 @@ abstract class TweetSet {
   /**
     * Tests if `tweet` exists in this `TweetSet`.
     */
-  def contains(tweet: Tweet): Boolean
+  def NNcontains(tweet: Tweet): Boolean
 
   /**
     * This method takes a function and applies it to every element in the set.
