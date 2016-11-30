@@ -1,8 +1,5 @@
 package objsets
 
-import java.util.NoSuchElementException
-
-import common._
 import TweetReader._
 
 /**
@@ -195,11 +192,8 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
 
 trait TweetList {
   def head: Tweet
-
   def tail: TweetList
-
   def isEmpty: Boolean
-
   def foreach(f: Tweet => Unit): Unit =
     if (!isEmpty) {
       f(head)
@@ -209,9 +203,7 @@ trait TweetList {
 
 object Nil extends TweetList {
   def head = throw new java.util.NoSuchElementException("head of EmptyList")
-
   def tail = throw new java.util.NoSuchElementException("tail of EmptyList")
-
   def isEmpty = true
 }
 
